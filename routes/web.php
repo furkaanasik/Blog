@@ -94,6 +94,7 @@ Route::prefix('category')->group(function (){
     // SHOW CATEGORY POSTS BY SLUG
     Route::get('/{category:slug}', function (\App\Models\Category $category){
         return view('Component.categoryBlogPost', [
+            'categorySlug' => $category->slug,
             'categoryPosts' => $category->blog_posts()->get(),
         ]);
     })->name('get.categories.posts');

@@ -16,9 +16,18 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+//        $admin = \App\Models\User::factory()->create([
+//            'name' => 'admin',
+//            'email' => 'admin@admin.com',
+//            'password' => '123456'
+//        ]);
+//        $admin->role_as = 1;
+//        $admin->save();
+
+        $this->call(UserSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(BlogPostSeeder::class);
+        $this->call(BlogPostCategorySeeder::class);
+        $this->call(CommentSeeder::class);
     }
 }

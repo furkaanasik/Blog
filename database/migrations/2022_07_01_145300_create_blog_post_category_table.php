@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('blog_post_id');
             $table->foreignId('category_id');
-//            $table->string('blog_post_id');
-//            $table->string('category_id');
         });
     }
 

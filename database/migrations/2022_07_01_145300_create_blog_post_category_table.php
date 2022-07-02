@@ -15,8 +15,16 @@ return new class extends Migration
     {
         Schema::create('category_post', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('blog_post_id');
-            $table->foreignId('category_id');
+            $table->foreignId('blog_post_id')
+                ->constrained('blog_posts')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('category_id')
+                ->constrained('categories')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+//            $table->foreignId('blog_post_id');
+//            $table->foreignId('category_id');
         });
     }
 

@@ -1,6 +1,7 @@
 
+
 # Blog
-This project was developed using **PHP 8.1.2** and **Laravel 8**.
+This project was developed using **PHP 8.1.2** and **Laravel 8**. **Mysql** was used while developing the project.
 
 ## Sample Users
 
@@ -45,6 +46,8 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
     cp .env.example .env
 
 ## Database
+### Sample Database file
+You can download sample database file (.sql) at this [link](https://drive.google.com/file/d/1S7mUbTVFJi0GEWRRO3wdJFL00gqlwmzM/view?usp=sharing)
 
 ### Create Database
     php artisan migrate

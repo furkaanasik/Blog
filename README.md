@@ -14,9 +14,9 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
 ## Contents
 
 - [Additional Propeties](#additional-properties)
-- [Pages](#pages)
-- [Database](#database)
 - [Create .env File](#create-env-file)
+- [Database](#database)
+- [Pages](#pages)
 
 ## Additional Properties
 

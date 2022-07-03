@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->foreignId('blog_post_id')
                 ->constrained('blog_posts')
                 ->onUpdate('cascade')

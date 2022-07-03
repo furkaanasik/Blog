@@ -2,94 +2,58 @@
 
 namespace App\Services;
 
-use App\Repository\AuthRepository\AuthRepository;
+use App\Enums\UserRoleEnum;
+use App\Repository\AuthRepository\AuthRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AuthService
 {
-    protected $authRepository;
+    protected AuthRepositoryInterface $authRepository;
 
     /**
-     * @param $authRepository
+     * @param AuthRepositoryInterface $authRepository
      */
-    public function __construct(AuthRepository $authRepository)
+    public function __construct(AuthRepositoryInterface $authRepository)
     {
         $this->authRepository = $authRepository;
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function showLoginPage()
-    {
-        return view('Auth.login');
-    }
-
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function showRegistrationPage()
-    {
-        return view('Auth.registration');
-    }
-
-    /**
      * @param $credentials
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return string
      */
     public function loginUser($credentials)
     {
         if (Auth::attempt($credentials))
         {
-            if(Auth::user()->role_as == '1') // ADMIN
+            switch (Auth::user()->role_as)
             {
-                return redirect('/admin/dashboard');
-            }
-
-            else if(Auth::user()->role_as == '0') // USER
-            {
-                return redirect('/');
-            }
-
-            else
-            {
-                return redirect('/');
+                case UserRoleEnum::ADMIN->value:
+                    return UserRoleEnum::ADMIN->name;
+                case UserRoleEnum::USER->value:
+                    return UserRoleEnum::USER->name;
             }
         }
 
-        return redirect("login")->withSuccess('Oppes! You have entered invalid credentials');
+        return UserRoleEnum::USER->name;
     }
 
     /**
      * @param array $register
-     * @return \Illuminate\Http\RedirectResponse
+     * @return mixed
      */
     public function registerUser(array $register)
     {
-        $this->authRepository->creteUser($register);
-        return redirect()->route('login');
+        return $this->authRepository->creteUser($register);
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function dashboard()
-    {
-        if(Auth::check()){
-            return view('Component.posts');
-        }
-        return redirect("login")->withSuccess('Opps! You do not have access');
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return void
      */
     public function logOut()
     {
         Session::flush();
         Auth::logout();
-
-        return Redirect()->route('get.all.post');
     }
 }

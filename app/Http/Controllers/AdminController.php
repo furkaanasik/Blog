@@ -8,14 +8,20 @@ use App\Http\Requests\UpdateBlogPostRequest;
 use App\Models\BlogPost;
 use App\Models\User;
 use App\Services\AdminService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Redirect;
 
 
 class AdminController extends Controller
 {
-    protected $adminService;
+    protected AdminService $adminService;
 
     /**
-     * @param $adminService
+     * @param AdminService $adminService
      */
     public function __construct(AdminService $adminService)
     {
@@ -23,74 +29,88 @@ class AdminController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function showCreateBlogPostPage()
+    public function showCreateBlogPostPage(): View
     {
-        return $this->adminService->showCreateBlogPostPage();
+        $response = $this->adminService->getCategories();
+        return view('Component.createPost', [
+            'categories' => $response,
+        ]);
     }
 
     /**
      * @param CreateBlogPostRequest $createBlogPostRequest
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function createBlogPost(CreateBlogPostRequest $createBlogPostRequest)
+    public function createBlogPost(CreateBlogPostRequest $createBlogPostRequest): RedirectResponse
     {
-        return $this->adminService->createBlogPost($createBlogPostRequest->only('categories', 'slug', 'title', 'body'));
+        $response = $this->adminService->createBlogPost($createBlogPostRequest->only('categories', 'slug', 'title', 'body'));
+        return redirect()->route('admin.posts');
     }
 
     /**
      * @param BlogPost $blogPost
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function showEditPostPage(BlogPost $blogPost)
+    public function showEditPostPage(BlogPost $blogPost): View
     {
-        return $this->adminService->showEditPostPage($blogPost);
+        $categories = $this->adminService->getCategories();
+        return view('Component.editPost', [
+            'post' => $blogPost,
+            'categories' => $categories,
+            'checkedbox' => $blogPost->category()->get()
+        ]);
     }
 
     /**
      * @param BlogPost $post
      * @param UpdateBlogPostRequest $updateBlogPostRequest
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function updateBlogPost(BlogPost $post, UpdateBlogPostRequest $updateBlogPostRequest)
+    public function updateBlogPost(BlogPost $post, UpdateBlogPostRequest $updateBlogPostRequest): RedirectResponse
     {
-        return $this->adminService->updateBlogPost($post, $updateBlogPostRequest->only('categories', 'slug', 'title', 'body'));
+        $response = $this->adminService->updateBlogPost($post, $updateBlogPostRequest->only('categories', 'slug', 'title', 'body'));
+        return redirect()->route('admin.posts');
     }
 
     /**
      * @param BlogPost $post
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function deleteBlogPost(BlogPost $post)
+    public function deleteBlogPost(BlogPost $post): RedirectResponse
     {
-        return $this->adminService->deleteBlogPost($post);
+        $response = $this->adminService->deleteBlogPost($post);
+        return redirect()->route('admin.posts');
     }
 
     /**
      * @param CreateCategoryRequest $createCategoryRequest
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function createCategory(CreateCategoryRequest $createCategoryRequest)
+    public function createCategory(CreateCategoryRequest $createCategoryRequest): RedirectResponse
     {
-        return $this->adminService->createCategory($createCategoryRequest->only('name', 'slug'));
+        $response =  $this->adminService->createCategory($createCategoryRequest->only('name', 'slug'));
+        return redirect()->route('admin.show.create.page');
     }
 
     /**
      * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse
      */
-    public function changeUserRole(User $user)
+    public function changeUserRole(User $user): RedirectResponse
     {
-        return $this->adminService->changeUserRole($user);
+        $response = $this->adminService->changeUserRole($user);
+        return redirect(url()->previous());
     }
 
     /**
      * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse
      */
-    public function deleteUser(User $user)
+    public function deleteUser(User $user): RedirectResponse
     {
-        return $this->adminService->deleteUser($user);
+        $response =  $this->adminService->deleteUser($user);
+        return redirect(url()->previous());
     }
 }

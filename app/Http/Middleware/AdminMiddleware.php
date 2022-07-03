@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserRoleEnum;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,22 +20,20 @@ class AdminMiddleware
     {
         if(Auth::check())
         {
-            if (Auth::user()->role_as == '1') // Admin
+            if (Auth::user()->role_as == UserRoleEnum::ADMIN->value) // Admin
             {
                 return $next($request);
             }
 
-            else if(Auth::user()->role_as == '0')
+            else if(Auth::user()->role_as == UserRoleEnum::USER->value) //User
             {
-                return redirect('/')->with("status", 'Access Denied! As you are not in an Admin.');
+                return redirect()->route('get.all.post');
             }
         }
 
         else
         {
-            return redirect('/login')->with('status', 'Please Login First!');
+            return redirect()->route('Auth.login');
         }
-
-
     }
 }

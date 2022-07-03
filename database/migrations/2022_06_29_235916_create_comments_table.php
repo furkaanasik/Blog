@@ -15,10 +15,7 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->foreignId('blog_post_id')
-                ->constrained('blog_posts')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreignId('blog_post_id')->constrained('blog_posts')->onUpdate('cascade')->onDelete('cascade');
 //            $table->foreignId('blog_post_id');
             $table->string("owner");
             $table->text('body');

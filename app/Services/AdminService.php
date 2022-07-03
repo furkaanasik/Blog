@@ -4,99 +4,86 @@ namespace App\Services;
 
 use App\Models\BlogPost;
 use App\Models\User;
-use App\Repository\AdminRepository\AdminRepository;
-use http\Encoding\Stream\Inflate;
+use App\Repository\AdminRepository\AdminRepositoryInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+
 
 class AdminService
 {
-    protected $adminRepository;
+    protected AdminRepositoryInterface $adminRepository;
 
     /**
-     * @param $adminRepository
+     * @param AdminRepositoryInterface $adminRepository
      */
-    public function __construct(AdminRepository $adminRepository)
+    public function __construct(AdminRepositoryInterface $adminRepository)
     {
         $this->adminRepository = $adminRepository;
     }
 
     /**
      * @param array $post
-     * @return \Illuminate\Http\RedirectResponse
+     * @return mixed
      */
     public function createBlogPost(array $post)
     {
-        $posts = $this->adminRepository->creteBlogPost($post);
-        return redirect()->route('admin.posts');
-        //return view('Component.post', compact('post'));
+        return $this->adminRepository->creteBlogPost($post);
     }
 
     /**
-     * @param BlogPost $post
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return mixed
      */
-    public function showEditPostPage(BlogPost $post)
+    public function getCategories()
     {
-        return view('Component.editPost', ['post' => $post, 'categories' => $this->adminRepository->getCategories(), 'checkedbox' => $post->category()->get()]);
+        return $this->adminRepository->getCategories();
     }
 
     /**
      * @param BlogPost $post
      * @param array $newpost
-     * @return \Illuminate\Http\RedirectResponse
+     * @return BlogPost
      */
     public function updateBlogPost(BlogPost $post, array $newpost)
     {
-        $response = $this->adminRepository->updateBlogPost($post, $newpost);
-        return redirect()->route('admin.posts');
+        return $this->adminRepository->updateBlogPost($post, $newpost);
     }
 
     /**
      * @param BlogPost $post
-     * @return \Illuminate\Http\RedirectResponse
+     * @return bool
      */
     public function deleteBlogPost(BlogPost $post)
     {
-        $response =  $this->adminRepository->deleteBlogPost($post);
-        return redirect()->route('admin.posts');
-    }
-
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function showCreateBlogPostPage()
-    {
-        $categories = $this->adminRepository->getCategories();
-        //$selectedID = 0;
-        return view('Component.createPost', compact('categories'));
+        return $this->adminRepository->deleteBlogPost($post);
     }
 
     /**
      * @param array $createCategoryRequest
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function createCategory(array $createCategoryRequest)
     {
-        $response = $this->adminRepository->createCategory($createCategoryRequest);
-        return redirect()->route('admin.show.create.page');
+        return $this->adminRepository->createCategory($createCategoryRequest);
+
     }
 
     /**
      * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return bool
      */
     public function changeUserRole(User $user)
     {
-        $response = $this->adminRepository->changeUserRole($user);
-        return redirect(url()->previous());
+        return $this->adminRepository->changeUserRole($user);
     }
 
     /**
      * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return bool
      */
     public function deleteUser(User $user)
     {
-        $response = $this->adminRepository->deleteUser($user);
-        return redirect(url()->previous());
+        return $this->adminRepository->deleteUser($user);
     }
 }

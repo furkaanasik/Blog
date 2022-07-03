@@ -12,12 +12,12 @@
 
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete{{$post->id}}">
                     Delete
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="delete{{$post->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">

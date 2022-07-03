@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Services\AuthService;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
-    protected $authService;
+    protected AuthService $authService;
 
     /**
      * @param AuthService $authService
@@ -20,28 +21,40 @@ class AuthController extends Controller
 
     /**
      * @param UserLoginRequest $userLoginRequest
-     * @return mixed
+     * @return RedirectResponse
      */
-    public function loginUser(UserLoginRequest $userLoginRequest)
+    public function loginUser(UserLoginRequest $userLoginRequest): RedirectResponse
     {
-        return $this->authService->loginUser($userLoginRequest->only('email', 'password'));
+        $userRole = $this->authService->loginUser($userLoginRequest->only('email', 'password'));
+
+        switch ($userRole)
+        {
+            case "ADMIN":
+                return redirect()->route('admin.dashboard');
+            case "USER":
+                return redirect()->route('get.all.post');
+            default:
+                return redirect()->route('get.all.post');
+        }
     }
 
     /**
      * @param UserCreateRequest $userCreateRequest
-     * @return mixed
+     * @return RedirectResponse
      */
-    public function registerUser(UserCreateRequest $userCreateRequest)
+    public function registerUser(UserCreateRequest $userCreateRequest): RedirectResponse
     {
-        return $this->authService->registerUser($userCreateRequest->all());
+        $response = $this->authService->registerUser($userCreateRequest->all());
+        return redirect()->route('login');
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse
      */
-    public function logout()
+    public function logout(): RedirectResponse
     {
-        return $this->authService->logOut();
+        $this->authService->logOut();
+        return Redirect()->route('get.all.post');
     }
 
 

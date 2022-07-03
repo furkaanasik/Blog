@@ -26,8 +26,8 @@ class UpdateBlogPostRequest extends FormRequest
         return [
             'categories'    => 'required',
             'categories.*'  => 'required',
-            'slug'          => 'required|string|max:15',
-            'title'         => 'required|string|max:30',
+            'slug'          => 'required|unique:blog_posts|string',
+            'title'         => 'required|string',
             'body'          => 'required|string'
         ];
     }

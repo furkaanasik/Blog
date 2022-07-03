@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 // HOME PAGE OR SHOW ALL POSTS
 Route::get("/", function (){
     return view('Component.posts', [
-        'posts' => \App\Models\BlogPost::all(),
+        'posts' => \App\Models\BlogPost::latest()->get(),
     ]);
 })->name('get.all.post');
 
@@ -28,7 +28,7 @@ Route::namespace('Auth')->group(function (){
     Route::get('/login', function (){
         return view('Auth.login');
     })->name('login');
-    Route::post('/post-login', [AuthController::class, 'loginUser'])->name('login.post');
+    Route::post('/login', [AuthController::class, 'loginUser'])->name('login.post');
     Route::get('/registration', function (){
         return view('Auth.registration');
     })->name('register');
@@ -40,7 +40,7 @@ Route::namespace('Auth')->group(function (){
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function (){
     // CRUD
     Route::get("/post/create", [AdminController::class, 'showCreateBlogPostPage'])->name('admin.show.create.page');
-    Route::post('/post/create-post', [AdminController::class, 'createBlogPost'])->name('admin.create.post');
+    Route::post('/post/create', [AdminController::class, 'createBlogPost'])->name('admin.create.post');
     Route::get('/post/{blog_post}/edit', [AdminController::class, 'showEditPostPage'])->name('admin.edit.post');
     Route::patch('/post/{post}/update', [AdminController::class, 'updateBlogPost'])->name('admin.update.post');
     Route::delete('/post/{post}/delete', [AdminController::class, 'deleteBlogPost'])->name('admin.delete.post');
@@ -48,7 +48,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function (){
     // DASHBOARD
     Route::get('/dashboard', function (){
         return view('Component.admins', [
-            'admins' => \App\Models\User::all()->where('role_as', '1'),
+            'admins' => \App\Models\User::latest()->get()->where('role_as', '1'),
         ]);
     })->name('admin.dashboard');
 
@@ -56,7 +56,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function (){
     Route::get('/posts', function (){
         // TODO add posts blade.
         return view('Admin.allPosts', [
-            'posts' => \App\Models\BlogPost::all(),
+            'posts' => \App\Models\BlogPost::latest()->get(),
         ]);
     })->name('admin.posts');
 
@@ -69,7 +69,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function (){
     // USER SHOW ALL USERS, CHANGE ROLE AND DELETE
     Route::get('/users', function (){
         return view('Component.adminUsers', [
-            'users' => \App\Models\User::all()->where('role_as', '0'),
+            'users' => \App\Models\User::latest()->get()->where('role_as', '0'),
         ]);
     })->name('admin.users');
     Route::patch('/change/{user}/role', [AdminController::class, 'changeUserRole'])->name('admin.change.user.role');
@@ -82,7 +82,7 @@ Route::prefix('post')->group(function (){
     Route::get("/{blog_post:slug}", function (\App\Models\BlogPost $blogPost){
         return view('Component.post', [
             'post' => $blogPost,
-            'comments' => $blogPost->comments,
+            'comments' => $blogPost->comments->sortByDesc('created_at'),
             'categories' => $blogPost->category()->get(),
         ]);
     })->name('get.post');

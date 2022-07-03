@@ -2,17 +2,17 @@
 
 namespace App\Services;
 
-use App\Repository\UserRepository\UserRepository;
+use App\Repository\UserRepository\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
 class UserServices
 {
-    protected $userRepository;
+    protected UserRepositoryInterface $userRepository;
 
     /**
-     * @param $userRepository
+     * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -21,7 +21,7 @@ class UserServices
      * @param int $postId
      * @param string $slug
      * @param array $comment
-     * @return \Illuminate\Http\RedirectResponse
+     * @return bool
      */
     public function createComment(int $postId, string $slug, array $comment)
     {
@@ -29,13 +29,13 @@ class UserServices
         {
             $userMail = \auth()->user()->email;
             $commentStructure = ['blog_post_id' => $postId, 'owner' => $userMail, 'body' => $comment['body']];
-            $response = $this->userRepository->createComment($commentStructure);
-            return redirect()->route('get.post', [$slug]);
+            $this->userRepository->createComment($commentStructure);
+            return true;
         }
 
         else
         {
-            return redirect()->route('login');
+            return false;
         }
     }
 }

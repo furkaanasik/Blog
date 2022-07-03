@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCommentRequest;
 use App\Services\UserServices;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    protected $userService;
+    protected UserServices $userService;
 
     /**
-     * @param $userService
+     * @param UserServices $userService
      */
     public function __construct(UserServices $userService)
     {
@@ -22,10 +23,15 @@ class UserController extends Controller
      * @param int $postId
      * @param string $slug
      * @param CreateCommentRequest $createCommentRequest
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function createComment(int $postId, string $slug, CreateCommentRequest $createCommentRequest)
+    public function createComment(int $postId, string $slug, CreateCommentRequest $createCommentRequest): RedirectResponse
     {
-        return $this->userService->createComment($postId, $slug, $createCommentRequest->all());
+        $response = $this->userService->createComment($postId, $slug, $createCommentRequest->all());
+
+        if($response)
+            return redirect()->route('get.post', [$slug]);
+        else
+            return redirect()->route('login');
     }
 }

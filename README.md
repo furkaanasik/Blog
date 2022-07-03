@@ -1,9 +1,13 @@
 # Blog
 This project was developed using **PHP 8.1.2** and **Laravel 8**.
 
-[click on this link](#post)
+## Contents
 
-### Additional Properties
+ - [Additional Propeties](#additional-properties)
+ - [Pages](#pages)
+ - [Database](#database)
+
+## Additional Properties
 
  - A post can have more than one category.
  <br />![userPostHasManyCategories](https://i.hizliresim.com/2liuc4l.png)

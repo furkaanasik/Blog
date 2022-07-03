@@ -54,6 +54,9 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
 ### Admin Dashboard All Posts
 ![adminDashboardPosts](https://i.hizliresim.com/fn96p4x.png)
 
+### Admin Dashboard Edit Post
+![adminDashboardEditPost](https://i.hizliresim.com/fo6tysj.png)
+
 ### Admin Dashboard Create Category
 ![adminDashboardCreateCategory](https://i.hizliresim.com/nneyuqa.png)
 

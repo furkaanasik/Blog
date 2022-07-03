@@ -17,7 +17,8 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
 ![blogComments](https://i.hizliresim.com/o1n2jkn.png)
 <br />
  -   Admin can assign admin role to users or delete users via control panel.
- <br />![adminDashboardUsers](https://i.hizliresim.com/a0q8svo.png)
+ <br />
+ ![adminDashboardUsers](https://i.hizliresim.com/a0q8svo.png)
  <br />
  
  - The admin role can be changed or deleted from the admin panel.

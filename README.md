@@ -39,6 +39,15 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
 
 - The admin role can be changed or deleted from the admin panel.
   ![adminDashboardAdmins](https://i.hizliresim.com/doepc57.png)
+  
+## Database
+
+### Create Database
+
+    php artisan migrate:fresh --seed
+
+### Database Schema
+![blogSchema](https://i.hizliresim.com/jmy22rn.png)
 
 ## Pages
 ### User Register
@@ -72,12 +81,3 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
 
 ### Admin Dashboard Create Post
 ![adminDashboardCreatePost](https://i.hizliresim.com/3r6sqzi.png)
-
-## Database
-
-### Create Database
-
-    php artisan migrate:fresh --seed
-
-### Database Schema
-![blogSchema](https://i.hizliresim.com/jmy22rn.png)

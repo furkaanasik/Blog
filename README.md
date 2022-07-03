@@ -1,7 +1,7 @@
 # Blog
 This project was developed using **PHP 8.1.2** and **Laravel 8**.
 
-[Custom foo description](## Pages)
+[Custom foo description](##Pages)
 
 ### Additional Properties
 

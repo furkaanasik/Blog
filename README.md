@@ -77,7 +77,7 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
 
 ### Create Database
 
-    php artisan migrate --seed
+    php artisan migrate:fresh --seed
 
 ### Database Schema
 ![blogSchema](https://i.hizliresim.com/jmy22rn.png)

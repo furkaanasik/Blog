@@ -19,22 +19,6 @@ class AuthController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function showLoginPage()
-    {
-        return $this->authService->showLoginPage();
-    }
-
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function showRegistrationPage()
-    {
-        return $this->authService->showRegistrationPage();
-    }
-
-    /**
      * @param UserLoginRequest $userLoginRequest
      * @return mixed
      */

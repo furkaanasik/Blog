@@ -25,9 +25,13 @@ Route::get("/", function (){
 
 // Auth
 Route::namespace('Auth')->group(function (){
-    Route::get('/login', [AuthController::class, 'showLoginPage'])->name('login');
+    Route::get('/login', function (){
+        return view('Auth.login');
+    })->name('login');
     Route::post('/post-login', [AuthController::class, 'loginUser'])->name('login.post');
-    Route::get('/registration', [AuthController::class, 'showRegistrationPage'])->name('register');
+    Route::get('/registration', function (){
+        return view('Auth.registration');
+    })->name('register');
     Route::post('/post-registration', [AuthController::class, 'registerUser'])->name('register.post');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

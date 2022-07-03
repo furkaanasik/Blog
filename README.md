@@ -39,7 +39,10 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
 
 - The admin role can be changed or deleted from the admin panel.
   ![adminDashboardAdmins](https://i.hizliresim.com/doepc57.png)
-  
+ 
+## Create .env File
+    cp .env.example .env
+
 ## Database
 
 ### Create Database

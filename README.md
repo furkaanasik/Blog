@@ -6,7 +6,7 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**.
  - A post can have more than one category.
  <br />![userPostHasManyCategories](https://i.hizliresim.com/2liuc4l.png)
 <br />
-- Factory and seeder were used to test the database. Thus, user, category, comment and post tables were tested with more than one data. Sample post table
+- Factory and seeder were used to test the database. Thus, user, category, comment and post tables were tested with more than one data. Sample post table:
 <br />
 <img src="https://i.hizliresim.com/mw0k41q.png">
  <br />

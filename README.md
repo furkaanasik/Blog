@@ -1,5 +1,3 @@
-
-
 # Blog
 This project was developed using **PHP 8.1.2** and **Laravel 8**. **Mysql** was used while developing the project.
 
@@ -22,7 +20,10 @@ This project was developed using **PHP 8.1.2** and **Laravel 8**. **Mysql** was 
 ## Additional Properties
 
 - A post can have more than one category.
-  <br />![userPostHasManyCategories](https://i.hizliresim.com/2liuc4l.png)
+![userPostHasManyCategories](https://i.hizliresim.com/2liuc4l.png)
+
+- Enum is used for user roles in the project.
+![userRoleEnum](https://i.hizliresim.com/godnz6j.png)
 
 - Factory and seeder were used to test the database. Thus, user, category, comment and post tables were tested with more than one data. Sample post table:
   ![databasePostTable](https://i.hizliresim.com/mw0k41q.png)

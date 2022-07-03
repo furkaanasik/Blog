@@ -1,34 +1,44 @@
+
 # Blog
 This project was developed using **PHP 8.1.2** and **Laravel 8**.
 
+## Sample Users
+
+- Admin
+    - username = admin@example.com
+    - password = 123456
+- User
+    - username = sample@example.com
+    - password = 123456
+
 ## Contents
 
- - [Additional Propeties](#additional-properties)
- - [Pages](#pages)
- - [Database](#database)
+- [Additional Propeties](#additional-properties)
+- [Pages](#pages)
+- [Database](#database)
 
 ## Additional Properties
 
- - A post can have more than one category.
- <br />![userPostHasManyCategories](https://i.hizliresim.com/2liuc4l.png)
+- A post can have more than one category.
+  <br />![userPostHasManyCategories](https://i.hizliresim.com/2liuc4l.png)
 
- - Factory and seeder were used to test the database. Thus, user, category, comment and post tables were tested with more than one data. Sample post table:
-![databasePostTable](https://i.hizliresim.com/mw0k41q.png)
+- Factory and seeder were used to test the database. Thus, user, category, comment and post tables were tested with more than one data. Sample post table:
+  ![databasePostTable](https://i.hizliresim.com/mw0k41q.png)
 
 
 
- - A post can have more than one comment.
+- A post can have more than one comment.
 
 
 ![blogComments](https://i.hizliresim.com/o1n2jkn.png)
 
- -   Admin can assign admin role to users or delete users via control panel.
+-   Admin can assign admin role to users or delete users via control panel.
 
- ![adminDashboardUsers](https://i.hizliresim.com/a0q8svo.png)
+![adminDashboardUsers](https://i.hizliresim.com/a0q8svo.png)
 
- 
- - The admin role can be changed or deleted from the admin panel.
- ![adminDashboardAdmins](https://i.hizliresim.com/doepc57.png)
+
+- The admin role can be changed or deleted from the admin panel.
+  ![adminDashboardAdmins](https://i.hizliresim.com/doepc57.png)
 
 ## Pages
 ### User Register
